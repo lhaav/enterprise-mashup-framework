@@ -1,0 +1,2 @@
+<iframe id="mashupFrame" src="MashupArea.html?username=<?php echo urlencode($username); ?>&usertype=<?php echo urlencode($usertype); ?>&mashupid=<?php echo urlencode($mashupID); ?>" style="width:100%;height:100%;" frameborder="0">
+</iframe>
