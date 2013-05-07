@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<widget name="PieChartWidget" id="CreditManager/Widget/PieChart"
+  spec="1.0" width="400" height="400" jsClass="CreditManager.Widget.PieChart"
+  x:min-width="400"
+  x:min-height="400"
+  xmlns:x="http://automicrosite.maesalu.com/OpenAjaxMetadataExtension"
+  xmlns="http://openajax.org/metadata"
+  sandbox="true">
+
+  <require type="javascript" src="jquery.js"></require>
+  <require type="javascript" src="PieChart.js"></require>
+  <require type="javascript" src="jquery.flot.js"></require>
+  <require type="javascript" src="jquery.flot.pie.js"></require>
+
+  <title>PieChart</title>
+
+  <content>
+    <![CDATA[
+    <fieldset> 
+      <legend id="__WID__legend">Pie Chart Widget</legend>
+      <div id="__WID__widget">
+        <div>
+          <div id="__WID__pie" style="float:left; width:375px; height: 275px;"></div>
+          <p id="__WID__choices" style="float:right; width:135px;"></p>
+          <p id="__WID__filter" style="float:right; width:135px;"></p>
+          <div id="__WID__piehover"></div>
+        </div>
+        <br /><br />
+      </div>
+    </fieldset>
+    ]]>
+  </content>
+
+  <categories>
+    <category x:iri="http://automicrosite.maesalu.com/PieChart" />
+  </categories>
+</widget>

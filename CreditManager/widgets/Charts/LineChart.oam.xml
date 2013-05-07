@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<widget name="LineChartWidget" id="CreditManager/Widget/LineChart"
+  spec="1.0" width="640" height="640" jsClass="CreditManager.Widget.LineChart"
+  x:min-width="640"
+  x:min-height="640"
+  xmlns:x="http://automicrosite.maesalu.com/OpenAjaxMetadataExtension"
+  xmlns="http://openajax.org/metadata"
+  sandbox="true">
+
+  <require type="javascript" src="jquery.js"></require>
+  <require type="javascript" src="LineChart.js"></require>
+  <require type="javascript" src="jquery.flot.js"></require>
+
+  <title>LineChart</title>
+
+  <content>
+    <![CDATA[
+    <fieldset> 
+      <legend id="__WID__legend">Line Chart Widget</legend>
+      <div id="__WID__widget">
+        <div>
+          <div id="__WID__line" style="float:left; width:375px; height: 475px;"></div>
+          <p id="__WID__choices" style="float:right; width:135px;"></p>
+          <p id="__WID__filter" style="float:right; width:135px;"></p>
+        </div>
+      </div>
+    </fieldset>
+    ]]>
+  </content>
+
+  <categories>
+    <category x:iri="http://automicrosite.maesalu.com/LineChart" />
+  </categories>
+</widget>
