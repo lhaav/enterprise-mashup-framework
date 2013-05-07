@@ -1,0 +1,185 @@
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 13px;
+  background: #F2F2F2;
+  _text-align: center;
+}
+
+h1, h2, h3, h4 {
+  font-family: Georgia, Helvetica, sans-serif;
+  color: #245794;
+}
+
+h1 {
+  font-size: 24px;
+}
+
+h2 {
+  font-size: 18px;
+}
+
+h3 {
+  font-size: 16px;
+}
+
+h4 {
+  font-size: 14px;
+}
+
+a, ul li {
+  color: #245794;
+}
+
+li span {
+  color: #000;
+}
+
+img {
+  border: 0;
+}
+
+.pngfix {
+  behavior: url('css/iepngfix.htc'); 
+}
+
+.pngfix2 {
+  behavior: url('../css/iepngfix2.htc'); 
+}
+
+span.note {
+  color: #245794;
+}
+
+/* ==================== Containers ==================== */
+
+#main {
+  margin: 0 auto;
+  _text-align: left;
+  width: 100%;
+  height: 100%;
+}
+
+#mashup {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+#middle {
+  position: relative;
+  margin-bottom: 10px;
+}
+
+/* ==================== Header ==================== */
+
+#header {
+  height: 80px;
+  margin: 10px 0px 10px 0px;
+  border-bottom: 1px solid #245794;
+}
+
+#header span {
+  margin: -1cm 0 0 0;
+  float: right;
+}  
+
+/* ==================== Content ==================== */
+
+#content  { 
+  background: #F2F2F2;
+  float: left;
+  color: #333;
+  padding: 5px 10px;
+  width: 70%;
+  display: inline;
+  position: relative;
+}
+
+#contentfull  { 
+  background: #F2F2F2;
+  color: #333;
+  padding: 5px 5px;
+  width: 95%;
+  display: inline;
+  position: relative;
+}
+
+/* ==================== Right pane ==================== */
+
+#right {
+  display: inline;
+  background: #F2F2F2;
+  padding: 5px 10px 5px 15px;
+  width: 25%;
+  float: right;
+  overflow: none;
+  border-left: 1px solid #245794;
+}
+
+#right table {
+  color: #000;
+  padding: 5px 0px;
+}
+
+#right h2 {
+  color: #000;
+  padding: 10px 30px;
+}
+
+/* ==================== Forms ==================== */
+
+#uploading { 
+  text-align: center; 
+  display: none; 
+}
+
+/* ==================== Live validation ==================== */
+
+.LV_validation_message{
+  font-weight: bold;
+  margin: 0 0 0 5px;
+}
+
+.LV_valid {
+  color: #00CC00;
+}
+
+.LV_invalid {
+  color: #CC0000;
+}
+  
+.LV_validation_message {
+  font-weight: bold;
+  margin: 0 0 0 5px;
+}
+
+.LV_valid_field,
+input.LV_valid_field:hover, 
+input.LV_valid_field:active,
+textarea.LV_valid_field:hover, 
+textarea.LV_valid_field:active,
+.fieldWithErrors input.LV_valid_field,
+.fieldWithErrors textarea.LV_valid_field 
+{
+  border: 1px solid #00CC00;
+}
+
+.LV_invalid_field, 
+input.LV_invalid_field:hover, 
+input.LV_invalid_field:active,
+textarea.LV_invalid_field:hover, 
+textarea.LV_invalid_field:active,
+.fieldWithErrors input.LV_invalid_field,
+.fieldWithErrors textarea.LV_invalid_field
+{
+  border: 1px solid #CC0000;
+}
+
+#smallHidden {
+  border: white solid 0px;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  width: 1px;
+  height: 1px;
+}

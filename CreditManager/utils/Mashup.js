@@ -51,6 +51,13 @@ function loadMashupView() {
   url = url + encodeURIComponent('property[' + (view.length) + '][mashupId]') + '=' + encodeURIComponent(mashupId) + '&';
   url = url + encodeURIComponent('property[' + (view.length) + '][rootUrl]') + '=' + encodeURIComponent(rootUrl) + '&';
   
+  url = url + encodeURIComponent('widget[' + (view.length + 1) + ']') + '=' + encodeURIComponent(rootUrl + 'widgets/Proxy/Proxy.oam.xml') + '&';
+  url = url + encodeURIComponent('property[' + (view.length + 1) + '][wsdl]') + '=http://deepweb.ut.ee/creditmanager/WSDLs/krdxInterfaceService-liisi.wsdl&';
+  url = url + encodeURIComponent('property[' + (view.length + 1) + '][operation]') + '=getOrganizationDetails&';
+  url = url + encodeURIComponent('property[' + (view.length + 1) + '][proxy]') + '=123&';
+
+  //url = url + encodeURIComponent('widget[' + (view.length + 2) + ']') + '=' + encodeURIComponent(rootUrl + 'widgets/Transformer/Transformer.oam.xml') + '&';
+  
   console.log(url);
 
   window.location.href = url;
