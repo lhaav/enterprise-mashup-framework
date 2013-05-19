@@ -33,7 +33,7 @@ CreditManager.Widget.Timetracker.prototype = {
     var subscribeTopics = JSON.parse(this.OpenAjax.getPropertyValue('subscribetopics'));
 
     var thisWidget = this;
-    this.OpenAjax.hub.subscribe('CreditManager.InternalData.SessionFinished', function(topic, receivedData) {
+    this.OpenAjax.hub.subscribe('CreditManager.InternalData.StateFinished', function(topic, receivedData) {
       for (var i = 0; i < subscribeTopics.length; i++) {
         thisWidget.OpenAjax.hub.subscribe(subscribeTopics[i], function(topic, receivedData) {
           thisWidget.rawData = JSON.parse(receivedData);
