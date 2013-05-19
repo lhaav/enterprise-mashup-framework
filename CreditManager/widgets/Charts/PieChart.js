@@ -373,15 +373,19 @@ CreditManager.Widget.PieChart.prototype = {
 
     var keys = [];
     var selectElement = document.getElementById(thisWidget.widgetId + 'filterSelect');
-    if (selectElement.value == 'All') {
-      for (var key in thisWidget.dataSets) {
-        if (key != 'All') {
-          keys.push(key);
+    if (selectElement != null) {
+      if (selectElement.value == 'All') {
+        for (var key in thisWidget.dataSets) {
+          if (key != 'All') {
+            keys.push(key);
+          }
         }
+        keys.push('All');
+      } else {
+        keys.push(selectElement.value);
       }
-      keys.push('All');
     } else {
-      keys.push(selectElement.value);
+      keys.push('All');
     }
     
     var report = '';
