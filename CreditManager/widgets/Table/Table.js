@@ -1,4 +1,8 @@
-
+/**
+ * Table widget
+ *
+ * @author Liisi
+ */
 
 if (typeof(CreditManager) == "undefined") {
   CreditManager = {};
@@ -35,14 +39,13 @@ CreditManager.Widget.Table.prototype = {
   onLoad: function() {
     this.widgetId = this.OpenAjax.getId();
     console.log('Table loaded. Widget ID: ' + this.widgetId);
+    
+    this.OpenAjax.hub.subscribe('**', function(topic, receivedData) {
+      console.log('--------------------> ' + topic);
+    });
+    
     this.widgetOwner = this.OpenAjax.getPropertyValue('user');
-    
-    this.OpenAjax.hub.subscribe('**', 
-      function(topic, message) {
-        console.log('***************************' + topic);
-      }
-    );
-    
+   
     this.form = document.getElementById(this.widgetId + "widget");
     this.table = document.getElementById(this.widgetId + "datatable");
     this.configOptions = JSON.parse(this.OpenAjax.getPropertyValue('configoptions'));
@@ -110,14 +113,16 @@ CreditManager.Widget.Table.prototype = {
    * Only when content is received the action fields will be enabled
    */
   enableActionFields: function() {
-      // Enable buttons
+    // Enable buttons
     if (this.rawData) {
       var btns = document.getElementsByClassName(this.widgetId + 'input');
       var thisWidget = this;
       for (var j = 0; j < btns.length; j++) {
         btns[j].disabled = false;
         if (btns[j].type == 'button') {
-          btns[j].onclick = function() { return thisWidget.handleButtonClick(this, thisWidget) };
+          btns[j].onclick = function() {
+            return thisWidget.handleButtonClick(this, thisWidget);
+          };
         }
       }
     }
@@ -175,13 +180,28 @@ CreditManager.Widget.Table.prototype = {
     var columnID = 0;
     this.visualTableObj.setCell(rowID, columnID, rowObj['ID']);
 
+    var columnCount = this.visualTableObj.getNumberOfColumns();
+    var existingColumns = new Array();
+    for (var i = 0; i < columnCount; i++) {
+      existingColumns.push(this.visualTableObj.getColumnLabel(i));
+    }
+
     for (var i = 0; i < this.inputFieldNames.length; i++) {
       var inputFieldName = this.inputFieldNames[i];
       var inputField = this.inputFields[i];
 
+      var update = true;
+      columnID = $.inArray(inputFieldName, existingColumns);
+      if (columnID != -1) {
+        var valueInTable = this.visualTableObj.getValue(rowID, columnID);
+        if ((valueInTable != null) && (rowObj[inputFieldName] == null)) {
+          update = false;
+        }
+      }
+
       var value = rowObj[inputFieldName] == null ? '' : rowObj[inputFieldName];
 
-      if (inputField.type == 'select') {
+      if ((update) && (inputField.type == 'select')) {
         var values = inputField.value.split("|");
         var html = '<select class="' + inputField.name + '"';
         html = html + ' id="' + inputField.name + rowObj['ID'] + '"><option value=""></option>';
@@ -199,12 +219,16 @@ CreditManager.Widget.Table.prototype = {
 
     var row = new Array();
     for (var key in rowObj) {
-      var currentValue = this.visualTableObj.getValue(rowID, columnID);
-      if (currentValue != rowObj[key]) {
-        this.visualTableObj.setCell(rowID, columnID, rowObj[key]);
-        changed = true;
+      for (var i = 0; i < existingColumns.length; i++) {
+        if (existingColumns[i] == key) {
+          var currentValue = this.visualTableObj.getValue(rowID, i);
+          if (currentValue != rowObj[key]) {
+            this.visualTableObj.setCell(rowID, i, rowObj[key]);
+            changed = true;
+          }
+          break;
+        }
       }
-      columnID++;
     }
     return changed;
   },
@@ -218,7 +242,9 @@ CreditManager.Widget.Table.prototype = {
       var inputElements = document.getElementsByClassName(inputField.name);
       for (var j = 0; j < inputElements.length; j++) {
         var element = inputElements[j];
-        element.onchange = function() { thisWidget.handleInputOnChange(this, thisWidget); };
+        element.onchange = function() {
+          thisWidget.handleInputOnChange(this, thisWidget);
+        };
       }
     }
   },
@@ -264,7 +290,9 @@ CreditManager.Widget.Table.prototype = {
       // Add select listeners for input fields
       this.initExtraFieldListeners(thisWidget);
       // Re-init select listeners after sort
-      google.visualization.events.addListener(table, 'sort', function() { thisWidget.initExtraFieldListeners(thisWidget); } );
+      google.visualization.events.addListener(table, 'sort', function() {
+        thisWidget.initExtraFieldListeners(thisWidget);
+      });
       
       this.enableActionFields();
       
@@ -371,4 +399,5 @@ CreditManager.Widget.Table.prototype = {
     
     return message;
   }
+  
 };
