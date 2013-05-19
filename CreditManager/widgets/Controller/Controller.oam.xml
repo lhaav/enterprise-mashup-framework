@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<widget name="Controller" id="CreditManager/Widget/Controller"
+  spec="1.0" width="0" height="0" jsClass="CreditManager.Widget.Controller"
+  xmlns:x="http://deepweb.ut.ee/automicrosite/OpenAjaxMetadataExtension"
+  xmlns="http://openajax.org/metadata"
+  sandbox="true">
+
+  <library name="jQuery" version="1.9.1" src="../CommonUtils/">
+    <require type="javascript" src="jquery-1.9.1.min.js"></require>
+  </library>
+  <require type="javascript" src="Controller.js"></require>
+
+  <title>Controller</title>
+  
+  <content>
+    <![CDATA[]]>
+  </content>
+
+  <categories>
+    <category x:iri="http://deepweb.ut.ee/Datasets" />
+  </categories>
+</widget>
