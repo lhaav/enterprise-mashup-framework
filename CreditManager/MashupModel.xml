@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mashup>
+  <components>
+    <component id="timetracker" name="Time Tracker" source="Timetracker/Timetracker" >
+      <input topic="CreditManager.Data.CreditRisk" />
+      <input topic="CreditManager.Data.DebtCollection" />
+      <input topic="CreditManager.Data.CallClient" />
+      <input topic="CreditManager.Data.Monitor" />
+      <input topic="CreditManager.Data.CallComplete" />
+      <output topic="CreditManager.Data.TimeTrack" />
+    </component>
+    <component id="timetracksummary" name="Time Tracking" source="Table/Table" >
+      <input topic="CreditManager.Data.TimeTrack" />
+    </component>
+    <component id="organizationdetails" name="Organization Details" source="Proxy/Proxy">
+      <input topic="CreditManager.InternalData.OrganizationDetailsRequest" />
+      <output topic="CreditManager.InternalData.OrganizationDetailsResponse" />
+      <config>
+        <option wsdl="http://sample.org/WSDLs/InterfaceService.wsdl" operation="getOrganizationDetails" proxy="http://sample.org/proxywidget"/>
+      </config>
+    </component>
+    <component id="registerdebtcollection" name="Register Debt Collection" source="Proxy/Proxy">
+      <input topic="CreditManager.InternalData.DebtCollectionRequest" />
+      <output topic="CreditManager.InternalData.DebtCollectionResponse" />
+      <config>
+        <option wsdl="http://sample.org/WSDLs/krdxInterfaceService.wsdl" operation="registerDebtCollection" proxy="http://sample.org/proxywidget"/>
+      </config>
+    </component>
+    <component id="companysummary" name="Company summary" source="Table/Table">
+      <input topic="CreditManager.Data.InvoiceList" />
+      <input topic="CreditManager.Data.CreditRisk" />
+      <input topic="CreditManager.Data.DebtCollection" />
+      <input topic="CreditManager.Data.CallClient" />
+      <input topic="CreditManager.Data.Monitor" />
+      <input topic="CreditManager.Data.CallComplete" />
+      <input topic="CreditManager.Data.OrganizationDetails" />
+      <output topic="CreditManager.InternalData.CompanySummary" />
+    </component>
+    <component id="creditriskassessment" name="Credit Risk Assessment" source="Table/Table">
+      <input topic="CreditManager.Data.InvoiceList" />
+      <input topic="CreditManager.Data.OrganizationDetails" />
+      <input topic="CreditManager.Data.CreditRisk" />
+      <output id="creditrisk" topic="CreditManager.Data.CreditRisk" />
+      <config>
+        <option type="select" text="Credit Risk" name="creditrisk" value="High|Normal|Low" publishtopic="creditrisk" />
+      </config>
+    </component>
+    <component id="actionassignment" name="Action Assignment" source="Page/Page">
+      <input topic="CreditManager.Data.CreditRisk" />
+      <input topic="CreditManager.Data.DebtCollection" />
+      <input topic="CreditManager.Data.CallClient" />
+      <input topic="CreditManager.Data.Monitor" />
+      <output id="debtcollection" topic="CreditManager.Data.DebtCollection" />
+      <output id="callclient" topic="CreditManager.Data.CallClient" />
+      <output id="monitor" topic="CreditManager.Data.Monitor" />
+      <config>
+        <option type="button" value="Debt Collection" name="Action" publishtopic="debtcollection" />
+        <option type="button" value="Call client" name="Action" publishtopic="callclient" />
+        <option type="button" value="Monitor" name="Action" publishtopic="monitor" />
+      </config>
+    </component>
+    <component id="callclient" name="Call client" source="Page/Page">
+      <input topic="CreditManager.Data.CallClient" />
+      <input topic="CreditManager.Data.CallComplete" />
+      <output id="callcomplete" publishtopic="CreditManager.Data.CallComplete" />
+      <config>
+        <option type="textarea" text="Call asnwered by" name="callansweredby" />
+        <option type="textarea" text="Call notes" name="callnotes" />
+        <option type="button" value="Done" publishtopic="callcomplete" />
+      </config>
+    </component>
+    <component id="timetrackpie" name="Action summary" source="Charts/PieChart">
+      <input topic="CreditManager.InternalData.TimeTrackPie" />
+      <output id="report" topic="CreditManager.Data.Report" />
+      <config>
+        <option type="button" value="Download report" publishtopic="report" />
+      </config>
+    </component>
+    <component id="timetrackline" name="Action history" source="Charts/LineChart">
+      <input topic="CreditManager.InternalData.TimeTrackLine" />
+      <output id="report" topic="CreditManager.Data.Report" />
+      <config>
+        <option type="button" value="Download report" publishtopic="report" />
+      </config>
+    </component>
+    <component id="creditriskpie" name="Credit risks assigned for invoice debts" source="Charts/PieChart">
+      <input topic="CreditManager.InternalData.CreditRiskPie" />
+      <output id="report" topic="CreditManager.Data.Report" />
+      <config>
+        <option type="button" value="Download report" publishtopic="report" />
+      </config>
+    </component>
+    <component id="debtpie" name="Aged invoice debts" source="Charts/PieChart">
+      <input topic="CreditManager.InternalData.DebtPie" />
+      <output id="report" topic="CreditManager.Data.Report" />
+      <config>
+        <option type="button" value="Download report" publishtopic="report" />
+      </config>
+    </component>
+    <component id="actionbar" name="Actions assigned for invoice debts" source="Charts/BarChart">
+      <input topic="CreditManager.InternalData.ActionBar" />
+      <output id="report" topic="CreditManager.Data.Report" />
+      <config>
+        <option type="button" value="Download report" publishtopic="report" />
+      </config>
+    </component>
+    <component id="controller" name="Controller" source="Controller/Controller" >
+    </component>
+  </components>
+  <views>
+    <view id="manager" name="Manager">
+      <components>
+        <component id="controller" />
+        <component id="timetracksummary" />
+        <component id="timetrackpie" />
+        <component id="timetrackline" />
+      </components>
+    </view>
+    <view id="consultant" name="Credit consultant">
+      <components>
+        <component id="controller" />
+        <component id="companysummary" />
+        <component id="organizationdetails" />
+        <component id="actionbar" />
+        <component id="debtpie" />
+        <component id="creditriskpie" />
+      </components>
+    </view>
+    <view id="specialist" name="Credit specialist">
+      <components>
+        <component id="controller" />
+        <component id="creditriskassessment" />
+        <component id="actionassignment" />
+        <component id="callclient" />
+        <component id="timetracker" />
+      </components>
+    </view>
+    <view id="customer" name="Customer">
+      <components>
+        <component id="companysummary" />
+      </components>
+    </view>
+  </views>
+</mashup>
