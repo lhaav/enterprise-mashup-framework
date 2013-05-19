@@ -19,7 +19,7 @@
       <legend id="__WID__legend">Line Chart Widget</legend>
       <div id="__WID__widget">
         <div>
-          <div id="__WID__line" style="float:left; width:375px; height: 475px;"></div>
+          <div id="__WID__line" style="float:left; width:375px; height: 375px;"></div>
           <p id="__WID__choices" style="float:right; width:135px;"></p>
           <p id="__WID__filter" style="float:right; width:135px;"></p>
         </div>
