@@ -1,4 +1,8 @@
-
+/**
+ * Paging Form widget
+ *
+ * @author Liisi
+ */
 
 if (typeof(CreditManager) == "undefined") {
   CreditManager = {};
@@ -114,7 +118,9 @@ CreditManager.Widget.Page.prototype = {
       for (var j = 0; j < btns.length; j++) {
         btns[j].disabled = false;
         if (btns[j].type == 'button') {
-          btns[j].onclick = function() { return thisWidget.handleButtonClick(this, thisWidget) };
+          btns[j].onclick = function() {
+            return thisWidget.handleButtonClick(this, thisWidget);
+          };
         }
       }
     }
@@ -174,11 +180,6 @@ CreditManager.Widget.Page.prototype = {
    * Initializing underlying datastructure
    */
   initData: function() {
-    /*[0 => [Arve saaja => Kreedex, Arve väljastaja => Kreedex, Krediidirisk => Madal],
-       4 => [Arve saaja => Kreedex, Arve väljastaja => Kreedex, Krediidirisk => Keskmine],
-       2 => [Arve saaja => Kreedex, Arve väljastaja => Kreedex, Krediidirisk => Kõrge]
-      ]
-    */
     var data = this.rawData['route'];
     
     if (data != null) {
@@ -244,12 +245,14 @@ CreditManager.Widget.Page.prototype = {
   initPagination: function() {
     // Add page controls
     var thisWidget = this;
-    var pageCount = this.pages.length; //Object.keys(this.tableData).length;
+    var pageCount = this.pages.length;
 
     $('#' + this.widgetId + 'pagination').pagination(pageCount, {
       items_per_page: 1,
       current_page: this.currentPage,
-      callback: function(current_page, container) { return thisWidget.handlePaginationClick(current_page, container) }
+      callback: function(current_page, container) {
+        return thisWidget.handlePaginationClick(current_page, container);
+      }
     });
   },
   
@@ -258,7 +261,7 @@ CreditManager.Widget.Page.prototype = {
    */
   handlePaginationClick: function(currentPage, container) {
     this.currentPage = currentPage;
-    this.dataId = this.pages[currentPage]; //Object.keys(this.tableData)[currentPage];
+    this.dataId = this.pages[currentPage];
     this.fillForm();
     return false;
   },
