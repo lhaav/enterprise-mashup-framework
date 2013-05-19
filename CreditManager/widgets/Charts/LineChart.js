@@ -339,11 +339,69 @@ CreditManager.Widget.LineChart.prototype = {
    */   
   handleButtonClick: function(btnObj, thisWidget) {
     var report = '';
-    for (var labelKey in this.dataCounts) {
-      var dataObjs = this.dataCounts[labelKey];
-      for (var dataObj in dataObjs) {
-        var value = parseFloat(dataObjs[dataObj]).toFixed(2); 
-        report = report + labelKey + ';' + dataObj + ';' + value + ';\n';
+    
+    var selectElement = document.getElementById(thisWidget.widgetId + 'filterSelect');
+    var selection = selectElement.value;
+    
+    var actions = [];
+    if (selection = 'All') {
+      for (var action in thisWidget.dataCounts) {
+        if (action != 'All') {
+          actions.push(action);  
+        }
+      }
+      actions.push('All');
+    } else {
+      actions.push(selection);
+    }
+
+    for (var i = 0; i < actions.length; i++) {
+      var action = actions[i];
+      
+      var users = [];
+      for (var user in thisWidget.dataCounts[action]) {
+        users.push(user);
+      }
+      
+      var dates = [];
+      for (var j = 0; j < users.length; j++) {
+        for (var date in thisWidget.dataCounts[action][users[i]]) {
+          if (dates.indexOf(date) == -1) {
+            dates.push(date);
+          }
+        }
+      }
+      dates.sort();
+
+      if (dates.length > 0) {
+        // Title for table
+        report = report + action + '\n';
+
+        // Build a header
+        report = report + ';';
+        for (var j = 0; j < dates.length; j++) {
+          date = new Date(parseInt(dates[j]));
+          report = report + date.getFullYear() + '.' + (date.getMonth() + 1) + '.' + date.getDate() + ';'; 
+        }
+        report = report + '\n';
+
+        for (var j = 0; j < users.length; j++) {
+          var user = users[j];
+          report = report + user + ';';
+          for (var k = 0; k < dates.length; k++) {
+            if (thisWidget.dataCounts[action][user] != null) {
+              if (thisWidget.dataCounts[action][user][dates[k]] != null) {
+                report = report + thisWidget.dataCounts[action][user][dates[k]] + ';';
+              } else {
+                report = report + ';';
+              }
+            } else {
+              report = report + ';';
+            }
+          }
+          report = report + '\n';
+        }
+        report = report + '\n';
       }
     }
     
@@ -359,4 +417,4 @@ CreditManager.Widget.LineChart.prototype = {
     this.form.removeChild(element);
   }
   
-};
+}
