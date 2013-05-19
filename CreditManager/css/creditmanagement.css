@@ -3,6 +3,12 @@ body {
   font-size: 13px;
   background: #F2F2F2;
   _text-align: center;
+  height: 100%;
+  overflow: hidden;
+}
+
+html {
+  height: 100%;
 }
 
 h1, h2, h3, h4 {
@@ -55,14 +61,24 @@ span.note {
 #main {
   margin: 0 auto;
   _text-align: left;
-  width: 100%;
   height: 100%;
 }
 
-#mashup {
-  position: relative;
+#mashupArea{
+  height: 100%; 
+}
+
+#mashupFrame {
   width: 100%;
   height: 100%;
+  /* Firefox */
+  height: -moz-calc(100% - 100px);
+  /* WebKit */
+  height: -webkit-calc(100% - 100px);
+  /* Opera */
+  height: -o-calc(100% - 100px);
+  /* Standard */
+  height: calc(100% - 100px);
 }
 
 #middle {
@@ -74,7 +90,6 @@ span.note {
 
 #header {
   height: 80px;
-  margin: 10px 0px 10px 0px;
   border-bottom: 1px solid #245794;
 }
 

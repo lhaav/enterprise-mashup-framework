@@ -16,10 +16,8 @@
         <center><a href="<?php echo site_url('user'); ?>"><img src="<?php echo site_url('images/logo.png'); ?>" alt="Main Page" class="<?php echo $pngfix; ?>" /></a></center>
         <span>User: <b><?php echo $user; ?></b><br />
         [ <a href="<?php echo site_url('user/logout'); ?>">Log out</a> ]</span>
-      </div>  
-      <div id="mashup">
-        <?php echo $mashup; ?> 
       </div>
+      <?php echo $mashup; ?> 
       <div id="middle">
         <?php echo $content; ?>            
         <?php echo $right; ?>     
