@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<widget name="TransformerWidget" id="CreditManager/Widget/Transformer"
+  spec="1.0" width="0" height="0" jsClass="CreditManager.Widget.Transformer"
+  xmlns:x="http://deepweb.ut.ee/automicrosite/OpenAjaxMetadataExtension"
+  xmlns="http://openajax.org/metadata"
+  sandbox="true">
+
+  <content x:iri="http://deepweb.ut.ee/proxywidget/TransformerWidget.html"/>
+
+  <categories>
+    <category x:iri="http://deepweb.ut.ee/Datasets" />
+  </categories>
+
+</widget>
