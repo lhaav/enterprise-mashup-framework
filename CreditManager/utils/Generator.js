@@ -4,8 +4,7 @@
  * @author Liisi
  */
 
-function Generator(user, viewId, url) {
-  this.user = user;
+function Generator(viewId, url) {
   this.viewId = viewId;
   this.url = url;
 }

@@ -24,8 +24,8 @@ function loadMashupView() {
       case "username":
         var user = decodeURIComponent(param[1]);
         break;
-      case "usertype":
-        var usertype = decodeURIComponent(param[1]);
+      case "role":
+        var role = decodeURIComponent(param[1]);
         break;
       case "mashupid":
         var mashupId = decodeURIComponent(param[1]);
@@ -34,40 +34,49 @@ function loadMashupView() {
   }
   
   // Generate widgets for view
-  var generator = new Generator(user, usertype, rootUrl);
+  var generator = new Generator(role, rootUrl);
   var view = generator.GenerateView();
   var url = '';
+  var modelWidgetsUrl = '';
 
   for (var i = 0; i < view.length; i++) {
     var widgetName = view[i].widgetName;
     var widgetUrl = view[i].widgetUrl;
     var widgetProperties = view[i].widgetProperties;
 
-    url = url + composeUrl(i, widgetUrl, widgetProperties, user, usertype, mashupId);
+    modelWidgetsUrl = modelWidgetsUrl + composeUrl(i, widgetUrl, widgetProperties, user);
   }
 
-  url = 'http://deepweb.ut.ee/automicrosite/?' + url;
-  url = url + encodeURIComponent('widget[' + (view.length) + ']') + '=' + encodeURIComponent(rootUrl + 'widgets/System/Session.oam.xml') + '&';
-  url = url + encodeURIComponent('property[' + (view.length) + '][mashupId]') + '=' + encodeURIComponent(mashupId) + '&';
-  url = url + encodeURIComponent('property[' + (view.length) + '][rootUrl]') + '=' + encodeURIComponent(rootUrl) + '&';
-  
-  url = url + encodeURIComponent('widget[' + (view.length + 1) + ']') + '=' + encodeURIComponent(rootUrl + 'widgets/Proxy/Proxy.oam.xml') + '&';
-  url = url + encodeURIComponent('property[' + (view.length + 1) + '][wsdl]') + '=http://deepweb.ut.ee/creditmanager/WSDLs/krdxInterfaceService-liisi.wsdl&';
-  url = url + encodeURIComponent('property[' + (view.length + 1) + '][operation]') + '=getOrganizationDetails&';
-  url = url + encodeURIComponent('property[' + (view.length + 1) + '][proxy]') + '=123&';
+  $.post(this.rootUrl + "utils/Conf.php",
+    function(response) {
+      try {
+        response = JSON.parse(response);
+      }
+      catch(e) {
+        console.log('ERROR: ' + response);
+        return;
+      }
 
-  //url = url + encodeURIComponent('widget[' + (view.length + 2) + ']') + '=' + encodeURIComponent(rootUrl + 'widgets/Transformer/Transformer.oam.xml') + '&';
-  
-  console.log(url);
+      url = response['layout_generator']['url'] + '/?' ;
 
-  window.location.href = url;
+      url = url + modelWidgetsUrl;
+      
+      url = url + encodeURIComponent('widget[' + (view.length) + ']') + '=' + encodeURIComponent(rootUrl + 'widgets/System/State.oam.xml') + '&';
+      url = url + encodeURIComponent('property[' + (view.length) + '][mashupId]') + '=' + encodeURIComponent(mashupId) + '&';
+      url = url + encodeURIComponent('property[' + (view.length) + '][rootUrl]') + '=' + encodeURIComponent(rootUrl) + '&';
+
+      url = url + encodeURIComponent('widget[' + (view.length + 1) + ']') + '=' + encodeURIComponent(rootUrl + 'widgets/System/Transformer.oam.xml') + '&';  
+      
+      console.log(url);
+
+      window.location.href = url;
+    }
+  );
 }
 
-function composeUrl(i, widgetUrl, widgetProperties, user, view, mashupId) {
+function composeUrl(i, widgetUrl, widgetProperties, user) {
   var result = encodeURIComponent('widget[' + i + ']') + '=' + encodeURIComponent(rootUrl + widgetUrl) + '&';
   result = result + encodeURIComponent('property[' + i + '][user]') + '=' + encodeURIComponent(user) + '&';
-  result = result + encodeURIComponent('property[' + i + '][view]') + '=' + encodeURIComponent(view) + '&';
-  result = result + encodeURIComponent('property[' + i + '][mashupId]') + '=' + encodeURIComponent(mashupId) + '&';
 
   for (var property in widgetProperties) {
     var propertyValue;
