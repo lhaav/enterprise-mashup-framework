@@ -62,7 +62,7 @@
     <component id="callclient" name="Call client" source="Page/Page">
       <input topic="CreditManager.Data.CallClient" />
       <input topic="CreditManager.Data.CallComplete" />
-      <output id="callcomplete" publishtopic="CreditManager.Data.CallComplete" />
+      <output id="callcomplete" topic="CreditManager.Data.CallComplete" />
       <config>
         <option type="textarea" text="Call asnwered by" name="callansweredby" />
         <option type="textarea" text="Call notes" name="callnotes" />
